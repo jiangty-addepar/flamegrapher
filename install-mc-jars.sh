@@ -20,7 +20,9 @@
 # Installing JMC Jars to a local repo
 # ----------------------------------------------------------------------------
 
-jmc_version=`echo $(basename -a $JAVA_HOME/lib/missioncontrol/plugins/com.oracle.jmc.*.jar) | sed 's/.*_\(.*\)\.jar/\1/'`
+jmc_home=/home/damien/java/jmc7/plugins
+jmc_package='org.openjdk.jmc'
+jmc_version=`echo $(basename -a $jmc_home/$jmc_package.common*.jar) | sed 's/.*_\(.*\)\.jar/\1/'`
 
 echo "JMC JAR version: $jmc_version"
 
@@ -29,10 +31,10 @@ echo "jmc.version=$jmc_version" > jmc_version.properties
 function install_jar() {
     jar=$1_$jmc_version.jar
     echo "Installing JAR $jar"
-    mvn install:install-file -DlocalRepositoryPath=repo -DcreateChecksum=true -Dpackaging=jar -Dfile=$JAVA_HOME/lib/missioncontrol/plugins/$jar -DgroupId=com.oracle.jmc -DartifactId=$1 -Dversion=$jmc_version
+    mvn install:install-file -DlocalRepositoryPath=repo -DcreateChecksum=true -Dpackaging=jar -Dfile=$jmc_home/$jar -DgroupId=$jmc_package -DartifactId=$1 -Dversion=$jmc_version
 }
 
-install_jar com.oracle.jmc.common
-install_jar com.oracle.jmc.flightrecorder
+install_jar $jmc_package.common
+install_jar $jmc_package.flightrecorder
 
 sed -i -e "/<properties>/,/<\/properties>/ s|<jmc.version>.*</jmc.version>|<jmc.version>$jmc_version</jmc.version>|g" pom.xml
