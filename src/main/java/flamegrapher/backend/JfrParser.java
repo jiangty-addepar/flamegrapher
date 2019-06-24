@@ -75,7 +75,7 @@ public class JfrParser {
                 IMemberAccessor<IQuantity, IItem> accessor = events.getType()
                                                                    .getAccessor(JdkAttributes.ALLOCATION_SIZE.getKey());
                 IQuantity allocationSize = accessor.getMember(item);
-                return allocationSize.clampedLongValueIn(UnitLookup.BYTES);
+                return allocationSize.clampedLongValueIn(UnitLookup.BYTE);
             }
         }
         // For all other event types, simply return 1.
@@ -96,7 +96,7 @@ public class JfrParser {
                                                                          .getAccessor(JfrAttributes.DURATION.getKey());
 
         if (durationAccessor != null) {
-            duration = durationAccessor.getMember(item).clampedLongValueIn(UnitLookup.MILLISECONDS);
+            duration = durationAccessor.getMember(item).clampedLongValueIn(UnitLookup.MILLISECOND);
 
         } else {
             final IMemberAccessor<IQuantity, IItem> startAccessor = events.getType()
@@ -106,7 +106,7 @@ public class JfrParser {
 
             if (startAccessor != null && endAccessor != null) {
                 duration = endAccessor.getMember(item).subtract(startAccessor.getMember(item))
-                                                      .clampedLongValueIn(UnitLookup.MILLISECONDS);
+                                                      .clampedLongValueIn(UnitLookup.MILLISECOND);
             } else {
                 throw new ParserException("Event duration is unknown!");
             }
