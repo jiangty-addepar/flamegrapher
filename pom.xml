@@ -12,7 +12,7 @@
 		<vertx.version>3.5.2</vertx.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<frontend.directory>frontend</frontend.directory>
-		<jmc.version>6.0.0.173920</jmc.version>
+		<jmc.version>7.0.0-SNAPSHOT</jmc.version>
 	</properties>
 
 	<build>
