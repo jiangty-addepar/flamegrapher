@@ -240,7 +240,10 @@ public class JavaFlightRecorder implements Profiler {
     }
 
     private String filename(String pid, String recording) {
-        String filename = workingDir() + pid + "." + recording + ".jfr";
+        String filename = workingDir() + pid + "." + recording;
+        if (!filename.endsWith(".jfr")) {
+          filename = filename + ".jfr";
+        }
         return filename;
     }
 
